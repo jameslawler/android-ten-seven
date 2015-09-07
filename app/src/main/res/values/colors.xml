@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="walk" type="color">#7B1EAF00</item>
+    <item name="run" type="color">#e5640a</item>
+    <item name="wait" type="color">#e52a26</item>
+</resources>

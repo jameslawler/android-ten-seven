@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Ten 7</string>
+
+    <string name="countdown.label.walk">Walk</string>
+    <string name="countdown.label.run">Run</string>
+    <string name="countdown.label.wait">Wait</string>
+</resources>
