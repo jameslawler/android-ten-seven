@@ -8,14 +8,24 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+import butterknife.Bind;
+import butterknife.BindColor;
+import butterknife.BindString;
+import butterknife.ButterKnife;
+
 public class MainActivity extends Activity {
+
+    @Bind(R.id.countdown) TextView countdownTextBox;
+    @Bind(R.id.countdownLabel) TextView countdownLabel;
+    @Bind(R.id.countdownContainer) LinearLayout countdownContainer;
+
+    @BindString(R.string.countdown_label_walk) String countdownLabelWalk;
+    @BindString(R.string.countdown_label_run) String countdownLabelRun;
+    @BindString(R.string.countdown_label_wait) String countdownLabelWait;
 
     Calendar currentTime;
     Countdown countdown;
     CountdownState previousCountdownState;
-    TextView countdownTextBox;
-    TextView countdownLabel;
-    LinearLayout countdownContainer;
     Handler countdownHandler;
     Runnable countdownHandlerTask;
 
@@ -24,6 +34,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ButterKnife.bind(this);
         startCountdown();
     }
 
@@ -31,9 +42,6 @@ public class MainActivity extends Activity {
         currentTime = Calendar.getInstance();
         countdown = new Countdown();
         previousCountdownState = CountdownState.None;
-        countdownTextBox = (TextView)findViewById(R.id.countdown);
-        countdownLabel = (TextView)findViewById(R.id.countdownLabel);
-        countdownContainer = (LinearLayout)findViewById(R.id.countdownContainer);
         countdownHandler = new Handler();
         countdownHandlerTask = new Runnable()
         {
@@ -50,15 +58,15 @@ public class MainActivity extends Activity {
                     switch (countdown.State) {
                         case Walk:
                             countdownContainer.setBackgroundResource(R.color.walk);
-                            countdownLabel.setText(R.string.countdown_label_walk);
+                            countdownLabel.setText(countdownLabelWalk);
                             break;
                         case Run:
                             countdownContainer.setBackgroundResource(R.color.run);
-                            countdownLabel.setText(R.string.countdown_label_run);
+                            countdownLabel.setText(countdownLabelRun);
                             break;
                         default:
                             countdownContainer.setBackgroundResource(R.color.wait);
-                            countdownLabel.setText(R.string.countdown_label_wait);
+                            countdownLabel.setText(countdownLabelWait);
                     }
                 }
 
