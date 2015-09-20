@@ -1,7 +1,5 @@
 package com.jameslawler.tenseven;
 
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
