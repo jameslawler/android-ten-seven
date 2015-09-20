@@ -1,19 +1,22 @@
 package com.jameslawler.tenseven;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.trello.rxlifecycle.components.RxActivity;
+
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
-import butterknife.BindColor;
 import butterknife.BindString;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
-public class MainActivity extends Activity {
+public class MainActivity  extends RxActivity {
 
     @Bind(R.id.countdown) TextView countdownTextBox;
     @Bind(R.id.countdownLabel) TextView countdownLabel;
@@ -23,11 +26,7 @@ public class MainActivity extends Activity {
     @BindString(R.string.countdown_label_run) String countdownLabelRun;
     @BindString(R.string.countdown_label_wait) String countdownLabelWait;
 
-    Calendar currentTime;
-    Countdown countdown;
-    CountdownState previousCountdownState;
-    Handler countdownHandler;
-    Runnable countdownHandlerTask;
+    Countdown previousCountdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,45 +34,39 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-        startCountdown();
     }
 
-    private void startCountdown() {
-        currentTime = Calendar.getInstance();
-        countdown = new Countdown();
-        previousCountdownState = CountdownState.None;
-        countdownHandler = new Handler();
-        countdownHandlerTask = new Runnable()
-        {
-            @Override
-            public void run() {
-                currentTime.setTimeInMillis(System.currentTimeMillis());
-                countdown.Update(currentTime);
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-                countdownTextBox.setText(countdown.TimeLeft);
+        Observable.interval(1, TimeUnit.SECONDS)
+                .compose(bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .map(l -> Countdown.getInstance().Update(Calendar.getInstance()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(c -> displayCountdown(c));
+    }
 
-                if (countdown.State != previousCountdownState) {
-                    previousCountdownState = countdown.State;
+    private void displayCountdown(Countdown countdown) {
+        countdownTextBox.setText(countdown.TimeLeft);
 
-                    switch (countdown.State) {
-                        case Walk:
-                            countdownContainer.setBackgroundResource(R.color.walk);
-                            countdownLabel.setText(countdownLabelWalk);
-                            break;
-                        case Run:
-                            countdownContainer.setBackgroundResource(R.color.run);
-                            countdownLabel.setText(countdownLabelRun);
-                            break;
-                        default:
-                            countdownContainer.setBackgroundResource(R.color.wait);
-                            countdownLabel.setText(countdownLabelWait);
-                    }
-                }
+        if (previousCountdown == null || countdown.State != previousCountdown.State) {
+            previousCountdown = countdown;
 
-                countdownHandler.postDelayed(countdownHandlerTask, 1000);
+            switch (countdown.State) {
+                case Walk:
+                    countdownContainer.setBackgroundResource(R.color.walk);
+                    countdownLabel.setText(countdownLabelWalk);
+                    break;
+                case Run:
+                    countdownContainer.setBackgroundResource(R.color.run);
+                    countdownLabel.setText(countdownLabelRun);
+                    break;
+                default:
+                    countdownContainer.setBackgroundResource(R.color.wait);
+                    countdownLabel.setText(countdownLabelWait);
             }
-        };
-
-        countdownHandlerTask.run();
+        }
     }
 }

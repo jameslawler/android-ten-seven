@@ -11,7 +11,6 @@ public class CountdownTest extends TestCase {
 
     public void testWhenUpdateCalledWithWalkTimeShouldShowWalk() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -20,16 +19,15 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
-        assertEquals(CountdownState.Walk, countdown.State);
-        assertEquals("06:45", countdown.TimeLeft);
+        assertEquals(CountdownState.Walk, Countdown.getInstance().State);
+        assertEquals("06:45", Countdown.getInstance().TimeLeft);
     }
 
     public void testWhenUpdateCalledWithRunTimeShouldShowRun() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -38,16 +36,15 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
-        assertEquals(CountdownState.Run, countdown.State);
-        assertEquals("04:45", countdown.TimeLeft);
+        assertEquals(CountdownState.Run, Countdown.getInstance().State);
+        assertEquals("04:45", Countdown.getInstance().TimeLeft);
     }
 
     public void testWhenUpdateCalledWithWaitTimeShouldShowWait() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -56,16 +53,15 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
-        assertEquals(CountdownState.Wait, countdown.State);
-        assertEquals("02:45", countdown.TimeLeft);
+        assertEquals(CountdownState.Wait, Countdown.getInstance().State);
+        assertEquals("02:45", Countdown.getInstance().TimeLeft);
     }
 
     public void testWhenUpdateCalledWithExactlyBeforeSevenPast() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -74,16 +70,15 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
-        assertEquals(CountdownState.Wait, countdown.State);
-        assertEquals("00:01", countdown.TimeLeft);
+        assertEquals(CountdownState.Wait, Countdown.getInstance().State);
+        assertEquals("00:01", Countdown.getInstance().TimeLeft);
     }
 
     public void testWhenUpdateCalledWithExactlySevenPast() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -92,16 +87,15 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
-        assertEquals(CountdownState.Walk, countdown.State);
-        assertEquals("10:00", countdown.TimeLeft);
+        assertEquals(CountdownState.Walk, Countdown.getInstance().State);
+        assertEquals("10:00", Countdown.getInstance().TimeLeft);
     }
 
     public void testWhenUpdateCalledWithStartOfNewCountdown() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -110,16 +104,15 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
-        assertEquals(CountdownState.Walk, countdown.State);
-        assertEquals("09:59", countdown.TimeLeft);
+        assertEquals(CountdownState.Walk, Countdown.getInstance().State);
+        assertEquals("09:59", Countdown.getInstance().TimeLeft);
     }
 
     public void testWhenUpdateCalledWithTimeAfterSevenPast() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -128,10 +121,10 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
-        assertEquals(CountdownState.Walk, countdown.State);
-        assertEquals("07:25", countdown.TimeLeft);
+        assertEquals(CountdownState.Walk, Countdown.getInstance().State);
+        assertEquals("07:25", Countdown.getInstance().TimeLeft);
     }
 }
