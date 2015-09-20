@@ -29,11 +29,7 @@ public class MainActivity  extends RxActivity {
     @BindString(R.string.countdown_label_run) String countdownLabelRun;
     @BindString(R.string.countdown_label_wait) String countdownLabelWait;
 
-    Calendar currentTime;
-    Countdown countdown;
-    CountdownState previousCountdownState;
-    Handler countdownHandler;
-    Runnable countdownHandlerTask;
+    Countdown previousCountdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +37,6 @@ public class MainActivity  extends RxActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-        //startCountdown();
     }
 
     @Override
@@ -51,53 +46,30 @@ public class MainActivity  extends RxActivity {
         Observable.interval(1, TimeUnit.SECONDS)
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.io())
-                .map(l -> returnCurrentTime())
+                .map(l -> new Countdown(Calendar.getInstance()))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> System.out.println(Thread.currentThread().getName()));
+                .subscribe(c -> displayCountdown(c));
     }
 
-    private String returnCurrentTime()
-    {
-        System.out.println(Thread.currentThread().getName());
-        return null;
-    }
+    private void displayCountdown(Countdown countdown) {
+        countdownTextBox.setText(countdown.TimeLeft);
 
-    private void startCountdown() {
-        currentTime = Calendar.getInstance();
-        countdown = new Countdown();
-        previousCountdownState = CountdownState.None;
-        countdownHandler = new Handler();
-        countdownHandlerTask = new Runnable()
-        {
-            @Override
-            public void run() {
-                currentTime.setTimeInMillis(System.currentTimeMillis());
-                countdown.Update(currentTime);
+        if (previousCountdown == null || countdown.State != previousCountdown.State) {
+            previousCountdown = countdown;
 
-                countdownTextBox.setText(countdown.TimeLeft);
-
-                if (countdown.State != previousCountdownState) {
-                    previousCountdownState = countdown.State;
-
-                    switch (countdown.State) {
-                        case Walk:
-                            countdownContainer.setBackgroundResource(R.color.walk);
-                            countdownLabel.setText(countdownLabelWalk);
-                            break;
-                        case Run:
-                            countdownContainer.setBackgroundResource(R.color.run);
-                            countdownLabel.setText(countdownLabelRun);
-                            break;
-                        default:
-                            countdownContainer.setBackgroundResource(R.color.wait);
-                            countdownLabel.setText(countdownLabelWait);
-                    }
-                }
-
-                countdownHandler.postDelayed(countdownHandlerTask, 1000);
+            switch (countdown.State) {
+                case Walk:
+                    countdownContainer.setBackgroundResource(R.color.walk);
+                    countdownLabel.setText(countdownLabelWalk);
+                    break;
+                case Run:
+                    countdownContainer.setBackgroundResource(R.color.run);
+                    countdownLabel.setText(countdownLabelRun);
+                    break;
+                default:
+                    countdownContainer.setBackgroundResource(R.color.wait);
+                    countdownLabel.setText(countdownLabelWait);
             }
-        };
-
-        countdownHandlerTask.run();
+        }
     }
 }

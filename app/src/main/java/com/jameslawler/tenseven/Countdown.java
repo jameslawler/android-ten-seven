@@ -12,7 +12,11 @@ public class Countdown {
     private final int WalkUntilSecondsLeft = 5 * 60;
     private final int RunUntilSecondsLeft = 4 * 60;
 
-    public void Update(Calendar currentTime) {
+    public Countdown(Calendar currentTime) {
+        this.Update(currentTime);
+    }
+
+    public final Countdown Update(Calendar currentTime) {
         int currentMinute = currentTime.get(Calendar.MINUTE);
         int currentSecond = currentTime.get(Calendar.SECOND);
         int currentMinuteMod = currentMinute % 10;
@@ -38,5 +42,7 @@ public class Countdown {
         Integer seconds = totalSecondsLeft % 60;
 
         this.TimeLeft = String.format("%02d:%02d", minutes, seconds);
+
+        return this;
     }
 }

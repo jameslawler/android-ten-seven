@@ -11,7 +11,6 @@ public class CountdownTest extends TestCase {
 
     public void testWhenUpdateCalledWithWalkTimeShouldShowWalk() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -20,7 +19,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown countdown = new Countdown(time);
 
         // Assert
         assertEquals(CountdownState.Walk, countdown.State);
@@ -29,7 +28,6 @@ public class CountdownTest extends TestCase {
 
     public void testWhenUpdateCalledWithRunTimeShouldShowRun() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -38,7 +36,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown countdown = new Countdown(time);
 
         // Assert
         assertEquals(CountdownState.Run, countdown.State);
@@ -47,7 +45,6 @@ public class CountdownTest extends TestCase {
 
     public void testWhenUpdateCalledWithWaitTimeShouldShowWait() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -56,7 +53,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown countdown = new Countdown(time);
 
         // Assert
         assertEquals(CountdownState.Wait, countdown.State);
@@ -65,7 +62,6 @@ public class CountdownTest extends TestCase {
 
     public void testWhenUpdateCalledWithExactlyBeforeSevenPast() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -74,7 +70,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown countdown = new Countdown(time);
 
         // Assert
         assertEquals(CountdownState.Wait, countdown.State);
@@ -83,7 +79,6 @@ public class CountdownTest extends TestCase {
 
     public void testWhenUpdateCalledWithExactlySevenPast() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -92,7 +87,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown countdown = new Countdown(time);
 
         // Assert
         assertEquals(CountdownState.Walk, countdown.State);
@@ -101,7 +96,6 @@ public class CountdownTest extends TestCase {
 
     public void testWhenUpdateCalledWithStartOfNewCountdown() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -110,7 +104,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown countdown = new Countdown(time);
 
         // Assert
         assertEquals(CountdownState.Walk, countdown.State);
@@ -119,7 +113,6 @@ public class CountdownTest extends TestCase {
 
     public void testWhenUpdateCalledWithTimeAfterSevenPast() {
         // Arrange
-        Countdown countdown = new Countdown();
         Calendar time = Calendar.getInstance();
 
         time.set(Calendar.HOUR_OF_DAY, 17);
@@ -128,7 +121,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        countdown.Update(time);
+        Countdown countdown = new Countdown(time);
 
         // Assert
         assertEquals(CountdownState.Walk, countdown.State);
