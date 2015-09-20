@@ -19,7 +19,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        Countdown.getInstance().getInstance().Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
         assertEquals(CountdownState.Walk, Countdown.getInstance().State);
@@ -36,7 +36,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        Countdown.getInstance().getInstance().Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
         assertEquals(CountdownState.Run, Countdown.getInstance().State);
@@ -53,7 +53,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        Countdown.getInstance().getInstance().Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
         assertEquals(CountdownState.Wait, Countdown.getInstance().State);
@@ -70,7 +70,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        Countdown.getInstance().getInstance().Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
         assertEquals(CountdownState.Wait, Countdown.getInstance().State);
@@ -87,7 +87,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        Countdown.getInstance().getInstance().Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
         assertEquals(CountdownState.Walk, Countdown.getInstance().State);
@@ -104,7 +104,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        Countdown.getInstance().getInstance().Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
         assertEquals(CountdownState.Walk, Countdown.getInstance().State);
@@ -121,7 +121,7 @@ public class CountdownTest extends TestCase {
         time.set(Calendar.MILLISECOND, 0);
 
         // Act
-        Countdown.getInstance().getInstance().Update(time);
+        Countdown.getInstance().Update(time);
 
         // Assert
         assertEquals(CountdownState.Walk, Countdown.getInstance().State);
