@@ -1,12 +1,11 @@
 package com.jameslawler.tenseven;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.trello.rxlifecycle.ActivityEvent;
-import com.trello.rxlifecycle.RxLifecycle;
 import com.trello.rxlifecycle.components.RxActivity;
 
 import java.util.Calendar;
@@ -46,7 +45,7 @@ public class MainActivity  extends RxActivity {
         Observable.interval(1, TimeUnit.SECONDS)
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.io())
-                .map(l -> new Countdown(Calendar.getInstance()))
+                .map(l -> Countdown.getInstance().Update(Calendar.getInstance()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(c -> displayCountdown(c));
     }

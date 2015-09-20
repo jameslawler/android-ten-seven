@@ -5,16 +5,26 @@ import java.util.Calendar;
 /**
  * Created by james on 07/09/2015.
  */
-public class Countdown {
+
+public final class Countdown {
+    private static Countdown countdown;
+    private Countdown() {
+        // Exists only to defeat instantiation.
+    }
+
+    public static synchronized Countdown getInstance() {
+        if (countdown == null) {
+            countdown = new Countdown();
+        }
+
+        return countdown;
+    }
+
     public CountdownState State;
     public String TimeLeft;
 
     private final int WalkUntilSecondsLeft = 5 * 60;
     private final int RunUntilSecondsLeft = 4 * 60;
-
-    public Countdown(Calendar currentTime) {
-        this.Update(currentTime);
-    }
 
     public final Countdown Update(Calendar currentTime) {
         int currentMinute = currentTime.get(Calendar.MINUTE);
