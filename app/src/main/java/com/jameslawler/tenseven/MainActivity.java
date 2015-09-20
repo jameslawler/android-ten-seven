@@ -7,11 +7,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindString;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends Activity {
 
@@ -36,6 +41,18 @@ public class MainActivity extends Activity {
 
         ButterKnife.bind(this);
         startCountdown();
+
+        Observable.interval(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .map(l -> returnCurrentTime())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> System.out.println(Thread.currentThread().getName()));
+    }
+
+    private String returnCurrentTime()
+    {
+        System.out.println(Thread.currentThread().getName());
+        return Calendar.getInstance().getTime().toString();
     }
 
     private void startCountdown() {
