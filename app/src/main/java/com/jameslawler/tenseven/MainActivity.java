@@ -1,24 +1,25 @@
 package com.jameslawler.tenseven;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.trello.rxlifecycle.ActivityEvent;
+import com.trello.rxlifecycle.RxLifecycle;
+import com.trello.rxlifecycle.components.RxActivity;
+
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
-import butterknife.BindColor;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends Activity {
+public class MainActivity  extends RxActivity {
 
     @Bind(R.id.countdown) TextView countdownTextBox;
     @Bind(R.id.countdownLabel) TextView countdownLabel;
@@ -40,9 +41,15 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-        startCountdown();
+        //startCountdown();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         Observable.interval(1, TimeUnit.SECONDS)
+                .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .map(l -> returnCurrentTime())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -52,7 +59,7 @@ public class MainActivity extends Activity {
     private String returnCurrentTime()
     {
         System.out.println(Thread.currentThread().getName());
-        return Calendar.getInstance().getTime().toString();
+        return null;
     }
 
     private void startCountdown() {
